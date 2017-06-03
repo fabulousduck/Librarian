@@ -7,7 +7,7 @@ Librarian is simple in use because it has very few functions.
 
 ### ` ReadC([]string, chan string) `
 
-ReadBatch is for reading multiple files concurrently
+ReadC is for reading multiple files concurrently
 By providing a `string slice` containing the paths to the file.
 
 If a given path is a directory, all files in it will be read and returned
@@ -35,7 +35,7 @@ on the outgoing channel.
    
 ### `WriteC(chan lr.WriteOp)`
 
-WriteBatch is for writing to a large amount of files concurrently
+WriteC is for writing to a large amount of files concurrently
 by pushing `lr.writeOp`'s to a channel passed to `WriteBatch`.
 
 The channel will return  `n` amount of `boolean`'s representing if
