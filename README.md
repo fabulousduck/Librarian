@@ -23,7 +23,7 @@ on the outgoing channel.
    )
    
    func main () {
-      urls := []string{
+      paths := []string{
           "~/myPDFs/foo.pdf",
           "~/myDocs/"
       }
