@@ -28,7 +28,7 @@ on the outgoing channel.
           "~/myDocs/"
       }
       fileOutput := make(chan string)
-      go lr.ReadBatch(urls, fileOutput)
+      go lr.ReadC(urls, fileOutput)
       fileContents := <-fileOutput
    }
 ```   
@@ -53,7 +53,7 @@ example
    func main() {
       operationOutcomes := make(chan, bool)
       inputs := make(chan, lr.WriteOp)
-      go lr.WriteBatch(inputs)
+      go lr.WriteC(inputs)
       for i := 0; i < 100; i++ {
         inputs <- lr.WriteOp{dest: "~/Desktop/invoices/"+i+".txt", content: "invoice #"+i }
       }  
