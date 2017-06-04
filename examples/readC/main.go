@@ -1,18 +1,25 @@
 package main
 
 import(
-	lr "fabulousduck/librarian"
+	"fmt"
+	lr "github.com/fabulousduck/librarian"
 )
 
 func main () {
+	paths := []string{
+		"../exampleFiles/A.txt",
+		"../exampleFiles/B.txt",
+		"../exampleFiles/C.txt",
+	}
 
+	fileOutput := make(chan string)
+	go lr.ReadC(paths, fileOutput)
+	doSomethingWithFileContents(fileOutput)
 }
 
-
-func createJobs(numJobs int) []job {
-	jobs := []job{}
-	for i := 0; i < numJobs; i++ {
-		jobs = append(jobs, job{doThing, []string{"a","b"}})
+func doSomethingWithFileContents(fileOutputChannel chan string) {
+	for i := 0; i < 3; i++ {
+		content := <-fileOutputChannel
+		fmt.Println("fileContents : ", content)
 	}
-	return jobs
 }
