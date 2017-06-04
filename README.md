@@ -8,7 +8,7 @@ Librarian is simple in use because it has very few functions.
 ### ` ReadC([]string, chan string) `
 
 ReadC is for reading multiple files concurrently
-By providing a `string slice` containing the paths to the file.
+By providing a `string slice` containing the paths to the files.
 
 If a given path is a directory, all files in it will be read and returned
 on the outgoing channel.
