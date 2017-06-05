@@ -8,18 +8,7 @@ import(
 // <-chan is read only
 // chan<- is write only
 
-//archivist to do the actual operation
-func readWorker(incoming chan string, outGoing chan<- string) {
-	//assign the incoming job to the job variable
-	filePath := <-incoming
-	//execute the job
-	data, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		panic(err)
-	}
-	//push the result of job to the outGoing channel
-	outGoing <- string(data)
-}
+
  
 
 //TODO refactor this to be a concurrent read
