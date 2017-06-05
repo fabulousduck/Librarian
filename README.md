@@ -33,7 +33,7 @@ on the outgoing channel.
    }
 ```   
    
-### `WriteC(chan lr.WriteOp)`
+### `WriteC(chan lr.WriteOp, chan bool)`
 
 WriteC is for writing to a large amount of files concurrently
 by pushing `lr.writeOp`'s to a channel passed to `WriteBatch`.
@@ -53,7 +53,7 @@ example
    func main() {
       operationOutcomes := make(chan, bool)
       inputs := make(chan, lr.WriteOp)
-      go lr.WriteC(inputs)
+      go lr.WriteC(inputs, operationOutcomes)
       for i := 0; i < 100; i++ {
         inputs <- lr.WriteOp{dest: "~/Desktop/invoices/"+i+".txt", content: "invoice #"+i }
       }  
