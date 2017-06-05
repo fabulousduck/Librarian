@@ -16,21 +16,27 @@ on the outgoing channel.
 *example*
 
 ```go
-   package main
-   
-   import(
-      lr "fabulousduck/librarian"
-   )
-   
-   func main () {
-      paths := []string{
-          "~/myPDFs/foo.pdf",
-          "~/myDocs/"
-      }
-      fileOutput := make(chan string)
-      go lr.ReadC(urls, fileOutput)
-      fileContents := <-fileOutput
-   }
+package main
+
+import(
+	"fmt"
+	lr "github.com/fabulousduck/librarian"
+)
+
+func main () {
+	paths := []string{
+		"../exampleFiles/A.txt",
+		"../exampleFiles/B.txt",
+		"../exampleFiles/C.txt",
+	}
+
+	fileOutput := make(chan string)
+	go lr.ReadC(paths, fileOutput)
+	for i := 0; i < 3; i++ {
+		content := <-fileOutput
+		fmt.Println("file contents : ", content)
+	}
+}
 ```   
    
 ### `WriteC(chan lr.WriteOp, chan bool)`
@@ -55,7 +61,7 @@ example
       inputs := make(chan, lr.WriteOp)
       go lr.WriteC(inputs, operationOutcomes)
       for i := 0; i < 100; i++ {
-        inputs <- lr.WriteOp{dest: "~/Desktop/invoices/"+i+".txt", content: "invoice #"+i }
+        inputs <- lr.WriteOp{ dest: "~/Desktop/invoices/"+i+".txt", content: "invoice #"+i }
       }  
       outcomes := <- operationOutcomes
    }

@@ -5,9 +5,11 @@ import(
 	"io/ioutil"
 )
 
+// <-chan is read only
+// chan<- is write only
 
 //archivist to do the actual operation
-func archivist(incoming chan string, outGoing chan<- string) {
+func readWorker(incoming chan string, outGoing chan<- string) {
 	//assign the incoming job to the job variable
 	filePath := <-incoming
 	//execute the job
@@ -18,29 +20,9 @@ func archivist(incoming chan string, outGoing chan<- string) {
 	//push the result of job to the outGoing channel
 	outGoing <- string(data)
 }
+ 
 
-func ReadC(paths []string, outputChannel chan<- string) {
-	//channel to push new jobs onto
-	readJobsChannel := make(chan string)
-	//set initial value of archivist count
-	readJobCount := accountForDirs(paths)
-	readPaths := getReadPaths(paths)
-	//instantiate the workers
-	//because they run on channels, they
-	//are blocking until a job comes over 
-	//the channel
-	for i := 0; i < readJobCount; i++ {
-		go archivist(readJobsChannel, outputChannel)
-	}
-	//push all jobs onto the job channel
-	for i := 0; i < readJobCount; i++ {
-		readJobsChannel <- readPaths[i]
-	}
-	//close the job channel when done
-	close(readJobsChannel)
-
-}
-
+//TODO refactor this to be a concurrent read
 func accountForDirs(paths []string) int {
 	totalPathCount := 0
 	for i := 0; i < len(paths); i++ {
@@ -75,7 +57,7 @@ func getNumFilesInDir(path string) int {
 	return len(files)
 }
 
-func getReadPaths(paths []string) []string {
+func expandPaths(paths []string) []string {
 	allPaths := []string{}
 
 	for i := 0; i < len(paths); i++ {

@@ -14,12 +14,8 @@ func main () {
 
 	fileOutput := make(chan string)
 	go lr.ReadC(paths, fileOutput)
-	doSomethingWithFileContents(fileOutput)
-}
-
-func doSomethingWithFileContents(fileOutputChannel chan string) {
 	for i := 0; i < 3; i++ {
-		content := <-fileOutputChannel
-		fmt.Println("fileContents : ", content)
+		content := <-fileOutput
+		fmt.Println("file contents : ", content)
 	}
 }
