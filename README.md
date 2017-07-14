@@ -1,7 +1,7 @@
 # Librarian
 A tiny Go package for concurrent file operations.
 
-## Use
+## How to use
 
 Librarian is simple in use because it has very few functions.
 
