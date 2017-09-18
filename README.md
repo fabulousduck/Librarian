@@ -53,7 +53,7 @@ example
    package main
    
    import(
-      lr "fabulousduck/librarian"
+      lr "github.com/fabulousduck/librarian"
    )
    
    func main() {
